@@ -1,10 +1,12 @@
+from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
 from shop.documents import ProductDocument
 
 from .models import Category, Product
-from .serializers import CategorySerializer, ProductSerializer
+from .serializers import (CategorySerializer, ProductDocumentSerializer,
+                          ProductSerializer)
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -19,23 +21,23 @@ class ProductViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
 
-# class ProductDocumentViewSet(DocumentViewSet):
-#     document = ProductDocument
-#     serializer_class = ProductDocumentSerializer
-#     permission_classes = [IsAuthenticated]
-#     lookup_field = 'id'
-#     filter_backends = [
-#         'django_elasticsearch_dsl_drf.filter_backends.SearchFilterBackend',
-#         'django_elasticsearch_dsl_drf.filter_backends.FilteringFilterBackend',
-#         'django_elasticsearch_dsl_drf.filter_backends.OrderingFilterBackend',
-#     ]
-#     search_fields = ('title', 'description',)
-#     filter_fields = {
-#         'id': 'id',
-#         'price': 'price',
-#     }
-#     ordering_fields = {
-#         'id': 'id',
-#         'price': 'price',
-#     }
-#     ordering = ('id',)
+class ProductDocumentViewSet(DocumentViewSet):
+    document = ProductDocument
+    serializer_class = ProductDocumentSerializer
+    permission_classes = [IsAuthenticated]
+    lookup_field = 'id'
+    filter_backends = [
+        'django_elasticsearch_dsl_drf.filter_backends.SearchFilterBackend',
+        'django_elasticsearch_dsl_drf.filter_backends.FilteringFilterBackend',
+        'django_elasticsearch_dsl_drf.filter_backends.OrderingFilterBackend',
+    ]
+    search_fields = ('title', 'description',)
+    filter_fields = {
+        'id': 'id',
+        'price': 'price',
+    }
+    ordering_fields = {
+        'id': 'id',
+        'price': 'price',
+    }
+    ordering = ('id',)
