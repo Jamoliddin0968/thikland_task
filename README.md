@@ -37,3 +37,9 @@ docker-compose exec web python manage.py collectstatic --noinput
 
 ```bash
 docker-compose exec web python manage.py search_index --rebuild
+
+
+
+
+# Visit the following URL in your web browser to access the Swagger UI
+http://localhost:8000/swagger
