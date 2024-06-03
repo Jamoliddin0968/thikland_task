@@ -15,17 +15,17 @@ Quyidagi qadamlarni bajarib, loyihani o'rnatish va ishga tushirish mumkin.
 ### 1.
 
 ```bash
-git clone https://github.com/username/repository.git
-cd repository
+    $git clone https://github.com/username/repository.git
+    $cd repository
 
 
-### 2
+### 2.
 
 ```bash
-docker-compose up -d
+   $docker-compose up -d
 
 
-### 3
+### 3.
 
 ```bash
 docker-compose exec web python manage.py makemigrations
