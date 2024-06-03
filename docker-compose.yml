@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: task
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 1111
+    ports:
+      - "5432:5432"
+
+  web:
+    build: .
+    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:sha256-d89f5a5ef80989ce0be5be94e3eb3b37121048f22c3a3e4507476307d5ba073d
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
