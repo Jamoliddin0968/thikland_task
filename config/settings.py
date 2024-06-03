@@ -40,7 +40,7 @@ LIBS = [
     'rest_framework_simplejwt',
     "django_elasticsearch_dsl",
     "django_elasticsearch_dsl_drf",
-    'drf_spectacular',
+    'drf_yasg',
 ]
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -69,15 +69,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
-SPECTACULAR_SETTINGS = {
-    'TITLE': 'Your Project API',
-    'DESCRIPTION': 'Your project description',
-    'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': False,
-    # OTHER SETTINGS
-}
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
