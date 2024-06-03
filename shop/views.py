@@ -1,9 +1,13 @@
+from django.http import HttpResponse
 from django_elasticsearch_dsl_drf.filter_backends import (
     DefaultOrderingFilterBackend, FilteringFilterBackend, IdsFilterBackend,
     OrderingFilterBackend, SearchFilterBackend)
 from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
+from elasticsearch_dsl import Q
 from rest_framework import viewsets
+from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
 
 from shop.documents import ProductDocument
 
@@ -47,3 +51,29 @@ class ProductDocumentViewSet(DocumentViewSet):
         'price': 'price',
     }
     ordering = ('id',)
+
+
+class SearchProduct(APIView, LimitOffsetPagination):
+
+    def get(self, request, query):
+        try:
+            q = Q(
+                'multi_match',
+                query=query,
+                fields=[
+                    'title'
+                ], fuzziness='auto') & Q(
+                    'bool',
+                should=[
+                    Q('match', is_default=True),
+                ], minimum_should_match=1)
+
+            search = ProductDocument.search().query(q)
+            response = search.execute()
+
+            results = self.paginate_queryset(response, request, view=self)
+            serializer = self.ProductDocumentSerializer(results, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        except Exception as e:
+            return HttpResponse(e, status=500)
