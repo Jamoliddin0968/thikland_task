@@ -190,3 +190,6 @@ ELASTICSEARCH_DSL = {
         "hosts": "http://elasticsearch:9200",
     }
 }
+ELASTICSEARCH_INDEX_NAMES = {
+    'shop.documents.products': 'products',
+}

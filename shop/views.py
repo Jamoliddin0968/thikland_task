@@ -1,5 +1,6 @@
 from django_elasticsearch_dsl_drf.filter_backends import (
-    FilteringFilterBackend, OrderingFilterBackend, SearchFilterBackend)
+    DefaultOrderingFilterBackend, FilteringFilterBackend, IdsFilterBackend,
+    OrderingFilterBackend, SearchFilterBackend)
 from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
@@ -30,13 +31,16 @@ class ProductDocumentViewSet(DocumentViewSet):
     lookup_field = 'id'
 
     filter_backends = [
-        SearchFilterBackend,
         FilteringFilterBackend,
+        IdsFilterBackend,
         OrderingFilterBackend,
+        DefaultOrderingFilterBackend,
+        SearchFilterBackend,
     ]
     search_fields = ('title', 'description',)
     filter_fields = {
-        "title": {"field": "title"}
+        "title"
+
     }
     ordering_fields = {
         'id': 'id',

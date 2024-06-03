@@ -1,4 +1,4 @@
-# from django_elasticsearch_dsl_drf.serializers import DocumentSerializer
+from django_elasticsearch_dsl_drf.fields import CharField
 from django_elasticsearch_dsl_drf.serializers import DocumentSerializer
 from rest_framework import serializers
 
@@ -19,6 +19,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class ProductDocumentSerializer(DocumentSerializer):
+
     class Meta:
         document = ProductDocument
         fields = (

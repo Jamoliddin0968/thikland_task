@@ -22,7 +22,7 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
-    # class Meta:
-    #     indexes = [
-    #         models.Index(fields=['title',]),
-    #     ]
+    class Meta:
+        indexes = [
+            models.Index(fields=['title',]),
+        ]
