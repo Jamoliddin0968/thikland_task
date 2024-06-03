@@ -42,26 +42,6 @@ class ProductViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
 
-@extend_schema_view(
-    list=extend_schema(
-        description="Получение списка продуктов",
-        parameters=[
-            OpenApiParameter(name='search', description='Поиск по названию и описанию',
-                             type=OpenApiTypes.STR, required=False),
-            OpenApiParameter(name='title', description='Фильтр по названию продукта',
-                             type=OpenApiTypes.STR, required=False),
-            OpenApiParameter(name='ordering', description='Сортировка списка продуктов',
-                             type=OpenApiTypes.STR, required=False),
-        ]
-    ),
-    retrieve=extend_schema(
-        description="Получение детальной информации о продукте",
-        parameters=[
-            OpenApiParameter(name='id', description='Уникальный идентификатор продукта для поиска',
-                             type=OpenApiTypes.INT, required=True)
-        ]
-    ),
-)
 class ProductDocumentViewSet(DocumentViewSet):
     document = ProductDocument
     serializer_class = ProductDocumentSerializer
